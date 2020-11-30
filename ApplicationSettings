@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationSettings>
+  <CellTypeSpinInfos>
+    <Item class="Forguncy.Model.CellTypeSpinInfo" assembly="ServerDesignerCommon">
+      <CellTypeFullName>Forguncy.DropDownListCellType</CellTypeFullName>
+      <SpinType>UpDownKeys</SpinType>
+    </Item>
+    <Item class="Forguncy.Model.CellTypeSpinInfo" assembly="ServerDesignerCommon">
+      <CellTypeFullName>Forguncy.NumberCellType</CellTypeFullName>
+      <SpinType>UpDownKeys</SpinType>
+    </Item>
+    <Item class="Forguncy.Model.CellTypeSpinInfo" assembly="ServerDesignerCommon">
+      <CellTypeFullName>Forguncy.DateCellType</CellTypeFullName>
+      <SpinType>UpDownKeys</SpinType>
+    </Item>
+    <Item class="Forguncy.Model.CellTypeSpinInfo" assembly="ServerDesignerCommon">
+      <CellTypeFullName>Forguncy.TimeCellType</CellTypeFullName>
+      <SpinType>UpDownKeys</SpinType>
+    </Item>
+    <Item class="Forguncy.Model.CellTypeSpinInfo" assembly="ServerDesignerCommon">
+      <CellTypeFullName>Forguncy.UserCellType</CellTypeFullName>
+      <SpinType>UpDownKeys</SpinType>
+    </Item>
+  </CellTypeSpinInfos>
+  <IntegrateWithOtherApplication>
+    <Password>ZZt60~Hmm%qt</Password>
+  </IntegrateWithOtherApplication>
+  <IsDisableFocusOutTrigger>Submit</IsDisableFocusOutTrigger>
+  <LoadingIndicatorSettings>
+    <CSSColor>#FF00B0F0</CSSColor>
+    <CSSLoading>SpringLoading</CSSLoading>
+  </LoadingIndicatorSettings>
+  <MainPageHorizontalAlignment>Left</MainPageHorizontalAlignment>
+  <PageResponsiveMode>BothStretch</PageResponsiveMode>
+  <StartPage>启动页</StartPage>
+  <UserServicePort>35819</UserServicePort>
+  <WebSitePort>23406</WebSitePort>
+</ApplicationSettings>

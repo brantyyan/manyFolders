@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataConnectionSet>
+  <Item class="Forguncy.Model.Tables.DataConnectionInfo" assembly="ServerDesignerCommon">
+    <ConnectionString>Data Source=121.40.221.164;Initial Catalog=ERP_KeLaiEnXinCaiLiao;Persist Security Info=True;User ID=sa;Password=a123456@</ConnectionString>
+    <DataBaseType>SqlServer</DataBaseType>
+    <EConnectionString>8Yxjn5c5+wetfLtzYkaKQcC4fe6tkqRrCsVRwV1ChjE0PK2bTra4+84kDsoN5VGF2Rs9uP9L4qi3KbLhzp/fPL8Zd02+7VHUqkMSzdUvkJ8EzCRETFmQFkxg8xjDLmvZlTQoya2+7VQN8EnzNsjABeSdEXPoorYVUPMwZoYMKr8=</EConnectionString>
+    <ID>67938a03-9f29-4a5e-87d5-909a8da6b5b6</ID>
+  </Item>
+</DataConnectionSet>

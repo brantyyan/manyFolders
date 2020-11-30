@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SchedulerTasks>
+  <Items>
+    <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="ServerDesignerCommon">
+      <Commands>
+        <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="ServerDesignerCommon">
+          <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+          <ParamNameToSaveNewRowValue type="System.String">
+            <Value>NewRow</Value>
+          </ParamNameToSaveNewRowValue>
+          <RowsToUpdate>SpecificRow</RowsToUpdate>
+          <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+            <ColumnBindingInfo>
+              <ColumnName>ID</ColumnName>
+              <TableName>涂布报工批号表</TableName>
+            </ColumnBindingInfo>
+            <CompareType>NotEqualsTo</CompareType>
+            <Id>30c53416-8eb2-48ed-a75f-0b5c5737391f</Id>
+            <Value type="System.String">
+              <Value>%Null%</Value>
+            </Value>
+          </RowsToUpdateCondition>
+          <ShowConfirm>False</ShowConfirm>
+          <TableName>涂布报工批号表</TableName>
+          <UpdateValues>
+            <Item class="Forguncy.Model.UpdateValueItem" assembly="ServerDesignerCommon">
+              <ColumnName>自增编号</ColumnName>
+              <Value type="System.String">
+                <Value>0</Value>
+              </Value>
+            </Item>
+          </UpdateValues>
+        </Item>
+      </Commands>
+      <Description>清空自增编号</Description>
+      <Name>定时任务1</Name>
+      <Triggers>
+        <Item class="Forguncy.ServerCommands.Models.ScheduleTrigger" assembly="ServerDesignerCommon">
+          <Interval>24</Interval>
+          <StartDateTime>11/30/2020 00:00:00</StartDateTime>
+        </Item>
+      </Triggers>
+    </Item>
+  </Items>
+</SchedulerTasks>

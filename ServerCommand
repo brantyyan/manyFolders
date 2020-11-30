@@ -1,0 +1,2000 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServerCommand>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <Comments>查询本批结余数量</Comments>
+                <ParameterName type="System.String">
+                  <Value>原本批结余数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>本批结余数量</ColumnName>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>本批结余数量</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>b8abae4b-3ec9-4500-8081-ec67845d0658</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.入库明细ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <Comments>查询现有库存数量</Comments>
+                <ParameterName type="System.String">
+                  <Value>原货品现有库存</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ExistingQuan</ColumnName>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                      </BindingInfo>
+                      <ColumnName>ExistingQuan</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Storage_jcsj_货品信息表</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>45686a70-c86f-4450-9709-a82a408e7ba4</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Storage_jcsj_货品信息表</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.ConditionCommand" assembly="Forguncy">
+                <ConditionAndCommandPairList>
+                  <Item class="Forguncy.Model.ConditionAndCommandPair" assembly="Forguncy">
+                    <CommandList>
+                      <Item class="Forguncy.Model.ReturnCommand" assembly="Forguncy">
+                        <Comments>本批结余小于出库数量，更新失败</Comments>
+                        <ErrorCode type="System.String">
+                          <Value>1</Value>
+                        </ErrorCode>
+                        <Message class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                          <SerializeProperty>="本批结余小于出库数量，出库失败！"</SerializeProperty>
+                        </Message>
+                      </Item>
+                    </CommandList>
+                    <Condition class="Forguncy.Model.IfCondition" assembly="Forguncy">
+                      <CompareType>LessThan</CompareType>
+                      <Id>b75a6a7f-e0ca-4e6e-b61e-b52515a42c2d</Id>
+                      <Param class="Forguncy.Model.IfConditionServerSiteParam" assembly="Forguncy">
+                        <ParamObject class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                          <SerializeProperty>=原本批结余数量.本批结余数量</SerializeProperty>
+                        </ParamObject>
+                      </Param>
+                      <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                        <SerializeProperty>=Item.出库数量</SerializeProperty>
+                      </Value>
+                    </Condition>
+                    <ID>d1267c03-f446-4871-94fe-350f6dc0753c</ID>
+                  </Item>
+                  <Item class="Forguncy.Model.ConditionAndCommandPair" assembly="Forguncy">
+                    <CommandList>
+                      <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                        <Comments>更新本批结余数量</Comments>
+                        <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                        <ParamNameToSaveNewRowValue type="System.String">
+                          <Value>NewRow</Value>
+                        </ParamNameToSaveNewRowValue>
+                        <RowsToUpdate>SpecificRow</RowsToUpdate>
+                        <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                          <ColumnBindingInfo>
+                            <ColumnName>ID</ColumnName>
+                            <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                          </ColumnBindingInfo>
+                          <CompareType>EqualsTo</CompareType>
+                          <Id>d5403989-b2eb-4c61-87f0-628f728ddbc3</Id>
+                          <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                            <SerializeProperty>=Item.入库明细ID</SerializeProperty>
+                          </Value>
+                        </RowsToUpdateCondition>
+                        <ShowConfirm>False</ShowConfirm>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                        <UpdateValues>
+                          <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                            <ColumnName>本批结余数量</ColumnName>
+                            <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                              <SerializeProperty>=原本批结余数量.本批结余数量-Item.出库数量</SerializeProperty>
+                            </Value>
+                          </Item>
+                        </UpdateValues>
+                      </Item>
+                      <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                        <Comments>更新现有库存数量</Comments>
+                        <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                        <ParamNameToSaveNewRowValue type="System.String">
+                          <Value>NewRow</Value>
+                        </ParamNameToSaveNewRowValue>
+                        <RowsToUpdate>SpecificRow</RowsToUpdate>
+                        <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                          <ColumnBindingInfo>
+                            <ColumnName>ID</ColumnName>
+                            <TableName>Storage_jcsj_货品信息表</TableName>
+                          </ColumnBindingInfo>
+                          <CompareType>EqualsTo</CompareType>
+                          <Id>e1dbbd82-afa5-436a-b8fa-91f0e8306279</Id>
+                          <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                            <SerializeProperty>=Item.货品ID</SerializeProperty>
+                          </Value>
+                        </RowsToUpdateCondition>
+                        <ShowConfirm>False</ShowConfirm>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                        <UpdateValues>
+                          <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                            <ColumnName>ExistingQuan</ColumnName>
+                            <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                              <SerializeProperty>=原货品现有库存.ExistingQuan-Item.出库数量</SerializeProperty>
+                            </Value>
+                          </Item>
+                        </UpdateValues>
+                      </Item>
+                    </CommandList>
+                    <ID>4378ce2e-a480-4d92-b64c-f45af13b1e3d</ID>
+                  </Item>
+                </ConditionAndCommandPairList>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=出库详情</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>本批结余更新</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <ArrayItems>
+              <Item type="System.String">
+                <Value>入库明细ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>出库单ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>出库数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品ID</Value>
+              </Item>
+            </ArrayItems>
+            <Name>出库详情</Name>
+            <PrimaryKeys>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+            </PrimaryKeys>
+            <Type>Array</Type>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+            <ParameterName type="System.String">
+              <Value>原剩余收货数量</Value>
+            </ParameterName>
+            <TableValue>
+              <BindingInfos>
+                <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                  <BindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </BindingInfo>
+                  <ColumnName>原采购信息子表ID</ColumnName>
+                </Item>
+                <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                  <BindingInfo>
+                    <ColumnName>Surplus</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </BindingInfo>
+                  <ColumnName>原采购剩余收货数量</ColumnName>
+                </Item>
+              </BindingInfos>
+              <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                <ColumnBindingInfo>
+                  <ColumnName>ID</ColumnName>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                </ColumnBindingInfo>
+                <CompareType>EqualsTo</CompareType>
+                <Id>255e0432-76cc-49b5-bd9e-875ac8db2cea</Id>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                </Value>
+              </SqlCondition>
+              <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+              <TableValueType>SingleRecord</TableValueType>
+            </TableValue>
+          </Item>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>dc6e0bfc-d9d5-420f-ba2e-6f0dc0b09953</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=原剩余收货数量.原采购信息子表ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=原剩余收货数量.原采购剩余收货数量-本次收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=采购收货信息子表</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+          <Item class="Forguncy.Model.ReturnCommand" assembly="Forguncy">
+            <ErrorCode type="System.String">
+              <Value>0</Value>
+            </ErrorCode>
+            <Message class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+              <SerializeProperty>="成功"</SerializeProperty>
+            </Message>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>更新采购信息子表收货数量</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息子表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购收货信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>本次收货数量</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <ArrayItems>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>PCID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>收货数量</Value>
+              </Item>
+            </ArrayItems>
+            <Name>采购收货信息子表</Name>
+            <PrimaryKeys>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+            </PrimaryKeys>
+            <Type>Array</Type>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+            <ConfirmText>您确定添加这条记录?</ConfirmText>
+            <ParamNameToSaveNewRowValue type="System.String">
+              <Value>采购收货添加</Value>
+            </ParamNameToSaveNewRowValue>
+            <ShowConfirm>False</ShowConfirm>
+            <TableName>Procurement_cgsh_ReceiptInfo</TableName>
+            <UpdateType>add</UpdateType>
+            <UpdateValues>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>PurchaseOrderID</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购信息表ID</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>PurchaseOrderNo1</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购单号</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>采购信息子表ID</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>ReceiptNo</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=收货单号</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>ReceiptTime</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=收货日期</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Remark</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=备注</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>ProcurementID</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=供应商信息表ID</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>SupplierName</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=供应商名称</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Buyer</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=购买人</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Consignee</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=收货人</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>本次收货数量</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=本次收货数量</SerializeProperty>
+                </Value>
+              </Item>
+            </UpdateValues>
+          </Item>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定添加这条记录?</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                <UpdateType>add</UpdateType>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>ReceiptID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=采购收货添加.ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品ID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.货品ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品编号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.货品编号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品名称</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.货品名称</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>长</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.长</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>宽</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.宽</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>型号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.型号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>批号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.批号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单位</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.单位</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>采购数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.采购数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>收货数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>重量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.重量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单价</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.单价</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>备注</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.备注</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>PCID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.PCID</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>原采购剩余收货数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>Surplus</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>Surplus</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>a7039f56-19f8-498a-bc5d-0bc0d8e48eb6</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前收货详情.PCID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>3abc5233-4c79-4480-b310-2b16d2b5081f</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=原采购剩余收货数量.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=原采购剩余收货数量.Surplus-当前收货详情.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=收货信息</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>当前收货详情</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>采购收货添加</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购单号</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货单号</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货日期</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>备注</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>供应商信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>供应商名称</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>购买人</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货人</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>本次收货数量</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息子表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <ArrayItems>
+              <Item type="System.String">
+                <Value>货品ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品编号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品名称</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>长</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>宽</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>型号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>批号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>单位</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>采购数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>收货数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>重量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>单价</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>备注</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>PCID</Value>
+              </Item>
+            </ArrayItems>
+            <Name>收货信息</Name>
+            <PrimaryKeys>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+            </PrimaryKeys>
+            <Type>Array</Type>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+            <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+            <ParamNameToSaveNewRowValue type="System.String">
+              <Value>采购收货添加</Value>
+            </ParamNameToSaveNewRowValue>
+            <RowsToUpdate>SpecificRow</RowsToUpdate>
+            <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+              <ColumnBindingInfo>
+                <ColumnName>ID</ColumnName>
+                <TableName>Procurement_cgsh_ReceiptInfo</TableName>
+              </ColumnBindingInfo>
+              <CompareType>EqualsTo</CompareType>
+              <Id>cc4b9532-415f-414c-bfc6-1f3780d684a1</Id>
+              <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=收货信息表ID</SerializeProperty>
+              </Value>
+            </RowsToUpdateCondition>
+            <ShowConfirm>False</ShowConfirm>
+            <TableName>Procurement_cgsh_ReceiptInfo</TableName>
+            <UpdateValues>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>PurchaseOrderID</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购信息表ID</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>PurchaseOrderNo1</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购单号</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>ReceiptTime</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=收货日期</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Remark</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=备注</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Consignee</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=收货人</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>本次收货数量</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=本次收货数量</SerializeProperty>
+                </Value>
+              </Item>
+            </UpdateValues>
+          </Item>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定添加这条记录?</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                <UpdateType>add</UpdateType>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>ReceiptID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=收货信息表ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品ID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品编号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品编号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品名称</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品名称</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>长</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.长</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>宽</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.宽</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>型号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.型号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>批号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.批号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>卷号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.卷号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单位</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.单位</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>采购数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.采购数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>收货数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单价</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.单价</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>备注</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.备注</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>PCID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.PCID</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>当前剩余收货数</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>Surplus</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>Surplus</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>4050ef4b-1575-4925-b2cb-a48aa01a244a</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>fbb7790c-ed62-454b-88cd-1834d66eb525</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=当前剩余收货数.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=当前剩余收货数.Surplus-Item.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=收货信息.AddRows</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>当前物品收货信息</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>货品ID</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>货品ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>收货数量</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>收货数量</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>PCID</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>PCID</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>3c06173b-9fef-4aea-9596-eb92c00a683e</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>老采购剩余数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>Surplus</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>Surplus</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>ce7b1233-532e-4e56-93ca-e19ae9d1a739</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>a2a78c83-c791-4b53-909d-d6c9360cf6a7</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=老采购剩余数量.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=老采购剩余数量.Surplus+当前物品收货信息.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>f3c1ed64-c156-4c88-b75f-3c5b8dec32db</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=Item.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>ReceiptID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=收货信息表ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品ID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品ID</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品编号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品编号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>货品名称</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品名称</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>长</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.长</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>宽</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.宽</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>型号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.型号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>批号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.批号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>卷号</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.卷号</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单位</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.单位</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>采购数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.采购数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>收货数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>单价</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.单价</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>备注</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.备注</SerializeProperty>
+                    </Value>
+                  </Item>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>PCID</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.PCID</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>新采购剩余数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>Surplus</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>Surplus</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>dfa149f5-ffcd-4771-a658-34de6893768b</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>bd7b5f19-4e3e-49c1-9691-7847513d6f27</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=新采购剩余数量.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=新采购剩余数量.Surplus-Item.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=收货信息.EditRows</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>老收货数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>PCID</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>PCID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>收货数量</ColumnName>
+                        <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>收货数量</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>d3cd2245-d2a4-451c-b1ed-e70f654958af</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>老采购剩余数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>Surplus</ColumnName>
+                        <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>Surplus</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>98efcbef-116a-490b-aed4-aa8e13c6d8ce</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>96a2c68a-af95-48df-a333-8331f734d21d</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=老采购剩余数量.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>Surplus</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=老采购剩余数量.Surplus+老收货数量.收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要删除吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>328bcb1f-bbe3-438b-865f-454c13cae669</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=Item.ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>True</ShowConfirm>
+                <TableName>Procurement_cgsh_ReceiptInfo_Child</TableName>
+                <UpdateType>delete</UpdateType>
+              </Item>
+              <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                <ParamNameToSaveNewRowValue type="System.String">
+                  <Value>NewRow</Value>
+                </ParamNameToSaveNewRowValue>
+                <RowsToUpdate>SpecificRow</RowsToUpdate>
+                <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                  <ColumnBindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Procurement_cgsh_ReceiptInfo</TableName>
+                  </ColumnBindingInfo>
+                  <CompareType>EqualsTo</CompareType>
+                  <Id>6d319d61-a8d5-4b9d-9079-e7220cbfb640</Id>
+                  <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                    <SerializeProperty>=收货信息表ID</SerializeProperty>
+                  </Value>
+                </RowsToUpdateCondition>
+                <ShowConfirm>False</ShowConfirm>
+                <TableName>Procurement_cgsh_ReceiptInfo</TableName>
+                <UpdateValues>
+                  <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                    <ColumnName>本次收货数量</ColumnName>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=本次收货数量</SerializeProperty>
+                    </Value>
+                  </Item>
+                </UpdateValues>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=收货信息.DeleteRows</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>采购收货修改</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购单号</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货日期</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>备注</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货人</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>本次收货数量</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息子表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <ArrayItems>
+              <Item type="System.String">
+                <Value>货品ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品编号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品名称</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>长</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>宽</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>型号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>批号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>卷号</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>单位</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>采购数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>收货数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>单价</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>备注</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>PCID</Value>
+              </Item>
+            </ArrayItems>
+            <Name>收货信息</Name>
+            <OnlySendChangedData>True</OnlySendChangedData>
+            <PrimaryKeys>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+            </PrimaryKeys>
+            <Type>Array</Type>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+        <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+        <ParamNameToSaveNewRowValue type="System.String">
+          <Value>NewRow</Value>
+        </ParamNameToSaveNewRowValue>
+        <RowsToUpdate>SpecificRow</RowsToUpdate>
+        <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+          <ColumnBindingInfo>
+            <ColumnName>ID</ColumnName>
+            <TableName>涂布报工批号表</TableName>
+          </ColumnBindingInfo>
+          <CompareType>NotEqualsTo</CompareType>
+          <Id>30c53416-8eb2-48ed-a75f-0b5c5737391f</Id>
+          <Value type="System.String">
+            <Value>%Null%</Value>
+          </Value>
+        </RowsToUpdateCondition>
+        <ShowConfirm>False</ShowConfirm>
+        <TableName>涂布报工批号表</TableName>
+        <UpdateValues>
+          <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+            <ColumnName>自增编号</ColumnName>
+            <Value type="System.String">
+              <Value>0</Value>
+            </Value>
+          </Item>
+        </UpdateValues>
+      </Item>
+    </Commands>
+    <Description>清空自增编号</Description>
+    <Name>定时任务1</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.ScheduleTrigger" assembly="Forguncy">
+        <Interval>24</Interval>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+            <ParameterName type="System.String">
+              <Value>老收货数量</Value>
+            </ParameterName>
+            <TableValue>
+              <BindingInfos>
+                <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                  <BindingInfo>
+                    <ColumnName>ID</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </BindingInfo>
+                  <ColumnName>ID</ColumnName>
+                </Item>
+                <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                  <BindingInfo>
+                    <ColumnName>Surplus</ColumnName>
+                    <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                  </BindingInfo>
+                  <ColumnName>Surplus</ColumnName>
+                </Item>
+              </BindingInfos>
+              <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                <ColumnBindingInfo>
+                  <ColumnName>ID</ColumnName>
+                  <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+                </ColumnBindingInfo>
+                <CompareType>EqualsTo</CompareType>
+                <Id>e3e33eda-73fc-4f44-a4be-19b50d40b6bf</Id>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=采购信息子表ID</SerializeProperty>
+                </Value>
+              </SqlCondition>
+              <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+              <TableValueType>SingleRecord</TableValueType>
+            </TableValue>
+          </Item>
+          <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+            <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+            <ParamNameToSaveNewRowValue type="System.String">
+              <Value>NewRow</Value>
+            </ParamNameToSaveNewRowValue>
+            <RowsToUpdate>SpecificRow</RowsToUpdate>
+            <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+              <ColumnBindingInfo>
+                <ColumnName>ID</ColumnName>
+                <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+              </ColumnBindingInfo>
+              <CompareType>EqualsTo</CompareType>
+              <Id>4a0d79c9-5734-48a2-84f2-40fde1306052</Id>
+              <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=老收货数量.ID</SerializeProperty>
+              </Value>
+            </RowsToUpdateCondition>
+            <ShowConfirm>False</ShowConfirm>
+            <TableName>Purchase_cgdd_OrderInfo_Child</TableName>
+            <UpdateValues>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>Surplus</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=老收货数量.Surplus+本次收货数量</SerializeProperty>
+                </Value>
+              </Item>
+            </UpdateValues>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>采购收货删除</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>收货信息表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>本次收货数量</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>采购信息子表ID</Name>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+            <ParameterName type="System.String">
+              <Value>现占用数量</Value>
+            </ParameterName>
+            <TableValue>
+              <BindingInfos>
+                <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                  <BindingInfo>
+                    <ColumnName>占用数量</ColumnName>
+                    <TableName>Sale_ddgl_OrderInfo_Child</TableName>
+                  </BindingInfo>
+                  <ColumnName>占用数量</ColumnName>
+                </Item>
+              </BindingInfos>
+              <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                <ColumnBindingInfo>
+                  <ColumnName>ID</ColumnName>
+                  <TableName>Sale_ddgl_OrderInfo_Child</TableName>
+                </ColumnBindingInfo>
+                <CompareType>EqualsTo</CompareType>
+                <Id>f461106f-46ee-43ac-a43d-0c68a841cd5d</Id>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=订单子表ID</SerializeProperty>
+                </Value>
+              </SqlCondition>
+              <TableName>Sale_ddgl_OrderInfo_Child</TableName>
+              <TableValueType>SingleRecord</TableValueType>
+            </TableValue>
+          </Item>
+          <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+            <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+            <ParamNameToSaveNewRowValue type="System.String">
+              <Value>NewRow</Value>
+            </ParamNameToSaveNewRowValue>
+            <RowsToUpdate>SpecificRow</RowsToUpdate>
+            <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+              <ColumnBindingInfo>
+                <ColumnName>ID</ColumnName>
+                <TableName>Sale_ddgl_OrderInfo_Child</TableName>
+              </ColumnBindingInfo>
+              <CompareType>EqualsTo</CompareType>
+              <Id>b144960a-58fa-45e0-b9af-e7df21762ca3</Id>
+              <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=订单子表ID</SerializeProperty>
+              </Value>
+            </RowsToUpdateCondition>
+            <ShowConfirm>False</ShowConfirm>
+            <TableName>Sale_ddgl_OrderInfo_Child</TableName>
+            <UpdateValues>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>占用数量</ColumnName>
+                <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                  <SerializeProperty>=现占用数量.占用数量-借用数量</SerializeProperty>
+                </Value>
+              </Item>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>借用表ID</ColumnName>
+              </Item>
+            </UpdateValues>
+          </Item>
+          <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+            <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+            <ParamNameToSaveNewRowValue type="System.String">
+              <Value>NewRow</Value>
+            </ParamNameToSaveNewRowValue>
+            <RowsToUpdate>SpecificRow</RowsToUpdate>
+            <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+              <ColumnBindingInfo>
+                <ColumnName>ID</ColumnName>
+                <TableName>借用表</TableName>
+              </ColumnBindingInfo>
+              <CompareType>EqualsTo</CompareType>
+              <Id>00ad5bfa-324d-4bbb-9c2a-d871919acc5f</Id>
+              <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=借用表ID</SerializeProperty>
+              </Value>
+            </RowsToUpdateCondition>
+            <ShowConfirm>False</ShowConfirm>
+            <TableName>借用表</TableName>
+            <UpdateValues>
+              <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                <ColumnName>删除</ColumnName>
+                <Value type="System.String">
+                  <Value>TRUE</Value>
+                </Value>
+              </Item>
+            </UpdateValues>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>订单子表占用变更_删除</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>订单子表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>借用表ID</Name>
+          </Item>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <Name>借用数量</Name>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+  <Item class="Forguncy.ServerCommands.Models.ServerCommands" assembly="Forguncy">
+    <Commands>
+      <Item class="Forguncy.Model.ServerTransactionCommand" assembly="Forguncy">
+        <CommandList>
+          <Item class="Forguncy.Model.LoopCommand" assembly="Forguncy">
+            <CommandList>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>原本批结余数量</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>本批结余数量</ColumnName>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                      </BindingInfo>
+                      <ColumnName>本批结余数量</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>334ad52b-868b-4e38-a414-3afd4c1d910b</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.入库明细ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.Commands.SetParameterCommand" assembly="Forguncy">
+                <ParameterName type="System.String">
+                  <Value>原货品现有库存</Value>
+                </ParameterName>
+                <TableValue>
+                  <BindingInfos>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ID</ColumnName>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                      </BindingInfo>
+                      <ColumnName>ID</ColumnName>
+                    </Item>
+                    <Item class="Forguncy.Model.Commands.ParameterTableValueColumn" assembly="Forguncy">
+                      <BindingInfo>
+                        <ColumnName>ExistingQuan</ColumnName>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                      </BindingInfo>
+                      <ColumnName>ExistingQuan</ColumnName>
+                    </Item>
+                  </BindingInfos>
+                  <SqlCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                    <ColumnBindingInfo>
+                      <ColumnName>ID</ColumnName>
+                      <TableName>Storage_jcsj_货品信息表</TableName>
+                    </ColumnBindingInfo>
+                    <CompareType>EqualsTo</CompareType>
+                    <Id>35ecd79e-af39-4497-81d2-abcfff09a92c</Id>
+                    <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                      <SerializeProperty>=Item.货品ID</SerializeProperty>
+                    </Value>
+                  </SqlCondition>
+                  <TableName>Storage_jcsj_货品信息表</TableName>
+                  <TableValueType>SingleRecord</TableValueType>
+                </TableValue>
+              </Item>
+              <Item class="Forguncy.Model.ConditionCommand" assembly="Forguncy">
+                <ConditionAndCommandPairList>
+                  <Item class="Forguncy.Model.ConditionAndCommandPair" assembly="Forguncy">
+                    <CommandList>
+                      <Item class="Forguncy.Model.ReturnCommand" assembly="Forguncy">
+                        <ErrorCode type="System.String">
+                          <Value>1</Value>
+                        </ErrorCode>
+                        <Message class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                          <SerializeProperty>="本批结余小于出库数量，出库失败！"</SerializeProperty>
+                        </Message>
+                      </Item>
+                    </CommandList>
+                    <Condition class="Forguncy.Model.IfCondition" assembly="Forguncy">
+                      <CompareType>LessThan</CompareType>
+                      <Id>1369e445-870c-4055-9e06-1b49c5890f17</Id>
+                      <Param class="Forguncy.Model.IfConditionServerSiteParam" assembly="Forguncy">
+                        <ParamObject class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                          <SerializeProperty>=原本批结余数量.本批结余数量</SerializeProperty>
+                        </ParamObject>
+                      </Param>
+                      <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                        <SerializeProperty>=Item.出库数量</SerializeProperty>
+                      </Value>
+                    </Condition>
+                    <ID>d1267c03-f446-4871-94fe-350f6dc0753c</ID>
+                  </Item>
+                  <Item class="Forguncy.Model.ConditionAndCommandPair" assembly="Forguncy">
+                    <CommandList>
+                      <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                        <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                        <ParamNameToSaveNewRowValue type="System.String">
+                          <Value>NewRow</Value>
+                        </ParamNameToSaveNewRowValue>
+                        <RowsToUpdate>SpecificRow</RowsToUpdate>
+                        <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                          <ColumnBindingInfo>
+                            <ColumnName>ID</ColumnName>
+                            <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                          </ColumnBindingInfo>
+                          <CompareType>EqualsTo</CompareType>
+                          <Id>e3fd2b40-e057-44fe-b976-c9d540f3592e</Id>
+                          <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                            <SerializeProperty>=Item.入库明细ID</SerializeProperty>
+                          </Value>
+                        </RowsToUpdateCondition>
+                        <ShowConfirm>False</ShowConfirm>
+                        <TableName>Storage_rkgl_InOutInfo_Child</TableName>
+                        <UpdateValues>
+                          <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                            <ColumnName>本批结余数量</ColumnName>
+                            <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                              <SerializeProperty>=原本批结余数量.本批结余数量-Item.出库数量</SerializeProperty>
+                            </Value>
+                          </Item>
+                        </UpdateValues>
+                      </Item>
+                      <Item class="Forguncy.Model.UpdateDataTableCommand" assembly="Forguncy">
+                        <ConfirmText>您确定要更新这行记录吗？</ConfirmText>
+                        <ParamNameToSaveNewRowValue type="System.String">
+                          <Value>NewRow</Value>
+                        </ParamNameToSaveNewRowValue>
+                        <RowsToUpdate>SpecificRow</RowsToUpdate>
+                        <RowsToUpdateCondition class="ForguncyDataAccess.GeneralCESqlCondition" assembly="ForguncyDataAccess">
+                          <ColumnBindingInfo>
+                            <ColumnName>ID</ColumnName>
+                            <TableName>Storage_jcsj_货品信息表</TableName>
+                          </ColumnBindingInfo>
+                          <CompareType>EqualsTo</CompareType>
+                          <Id>5b3d0e5e-e57e-46ae-adfe-9005acf61b16</Id>
+                          <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                            <SerializeProperty>=Item.货品ID</SerializeProperty>
+                          </Value>
+                        </RowsToUpdateCondition>
+                        <ShowConfirm>False</ShowConfirm>
+                        <TableName>Storage_jcsj_货品信息表</TableName>
+                        <UpdateValues>
+                          <Item class="Forguncy.Model.UpdateValueItem" assembly="Forguncy">
+                            <ColumnName>ExistingQuan</ColumnName>
+                            <Value class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                              <SerializeProperty>=原货品现有库存.ExistingQuan-Item.出库数量</SerializeProperty>
+                            </Value>
+                          </Item>
+                        </UpdateValues>
+                      </Item>
+                    </CommandList>
+                    <ID>4378ce2e-a480-4d92-b64c-f45af13b1e3d</ID>
+                  </Item>
+                </ConditionAndCommandPairList>
+              </Item>
+            </CommandList>
+            <LoopInfo class="Forguncy.Model.CountLoopInfo" assembly="Forguncy">
+              <LoopCount class="Forguncy.Model.FormulaReferObject" assembly="Forguncy">
+                <SerializeProperty>=出库详情</SerializeProperty>
+              </LoopCount>
+              <LoopItemParamName type="System.String">
+                <Value>Item</Value>
+              </LoopItemParamName>
+            </LoopInfo>
+          </Item>
+        </CommandList>
+      </Item>
+    </Commands>
+    <Name>出库本批结余更新</Name>
+    <Triggers>
+      <Item class="Forguncy.ServerCommands.Models.PostRequestTrigger" assembly="Forguncy">
+        <Parameters>
+          <Item class="Forguncy.ServerCommands.Models.PostRequestParameter" assembly="Forguncy">
+            <ArrayItems>
+              <Item type="System.String">
+                <Value>入库明细ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>出库单ID</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>出库数量</Value>
+              </Item>
+              <Item type="System.String">
+                <Value>货品ID</Value>
+              </Item>
+            </ArrayItems>
+            <Name>出库详情</Name>
+            <PrimaryKeys>
+              <Item type="System.String">
+                <Value>ID</Value>
+              </Item>
+            </PrimaryKeys>
+            <Type>Array</Type>
+          </Item>
+        </Parameters>
+        <Permission>
+          <AllowRoles>
+            <Item type="System.String">
+              <Value>FGC_LoginUser</Value>
+            </Item>
+          </AllowRoles>
+        </Permission>
+      </Item>
+    </Triggers>
+  </Item>
+</ServerCommand>
