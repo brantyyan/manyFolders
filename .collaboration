@@ -1757,16 +1757,7 @@
   },
   {
     "ModuleName": "直接入库",
-    "State": 1,
-    "LockedBy": {
-      "UserName": "GRAPECITY\\BrantyYan",
-      "Email": "example@example.com"
-    },
-    "LockDateTime": "2020-11-30T11:51:42.941622+08:00",
-    "ModuleType": 1,
-    "ToRemoveFiles": [
-      "Pages\\ERP\\08_仓库管理\\01_出入库操作\\01_入库操作\\01_入库选择页\\0_直接入库\\直接入库.json"
-    ]
+    "ModuleType": 1
   },
   {
     "ModuleName": "Pages\\ERP\\08_仓库管理\\01_出入库操作\\01_入库操作\\01_入库选择页\\1_采购入库",
